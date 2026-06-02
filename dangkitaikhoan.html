@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dangki.css">
+    <title>bansach.com</title>
+</head>
+
+<body>
+    <div id="dangkitaikhoan">
+        <form action="" id="khungdktkhoan">
+            <h1 id="tieude1">ĐĂNG KÍ TÀI KHOẢN</h1>
+            <div class="dki">
+                <input type="text" id="taikhoan" placeholder="Đăng kí tài khoản">
+            </div>
+            <div class="dki">
+                <input type="text" id="matkhau" placeholder="Nhập mật khẩu đăng kí">
+            </div>
+            <div class="dki">
+                <input type="password" id="mklan2" placeholder="Nhập lại mật khẩu">
+            </div>
+            <div id="dangkihoantat"><a href="">Đăng kí</a></div>
+            <a href="/dangnhp.html" id="dacotaikhoan">Đã có tài khoản</a><br>
+            <a href="/quenmk.html" id="dacotaikhoan">Quên mật khẩu</a>
+        </form>
+    </div>
+
+</body>
+<script>
+    // 1. Tìm các ô nhập liệu và nút bấm dựa theo đúng HTML cũ của bạn
+    const nutDangKi = document.querySelector("#dangkihoantat a");
+    const oTaiKhoan = document.getElementById("taikhoan");
+    const oMatKhau = document.getElementById("matkhau");
+    const oMatKhauLan2 = document.getElementById("mklan2");
+
+    // 2. Lắng nghe sự kiện click chuột vào nút "Đăng kí"
+    nutDangKi.addEventListener("click", function (e) {
+        e.preventDefault(); // Chặn thẻ <a href=""> tự động tải lại trang
+
+        const userMoi = oTaiKhoan.value.trim();
+        const passMoi = oMatKhau.value.trim();
+        const passLan2 = oMatKhauLan2.value.trim();
+
+        // Kiểm tra xem có bỏ trống ô nào không
+        if (userMoi === "" || passMoi === "" || passLan2 === "") {
+            alert("Vui lòng nhập đầy đủ thông tin đăng kí!");
+            return;
+        }
+
+        // Kiểm tra xem mật khẩu nhập lại có khớp không
+        if (passMoi !== passLan2) {
+            alert("Mật khẩu nhập lại không trùng khớp! Vui lòng kiểm tra lại.");
+            return;
+        }
+
+        // Đọc dữ liệu "file" tài khoản từ localStorage (Dùng chung key "fileTaiKhoan")
+        let danhSachTK = JSON.parse(localStorage.getItem("fileTaiKhoan")) || [];
+
+        // Kiểm tra xem tên tài khoản này đã có ai đăng kí trước đó chưa
+        const taiKhoanDaTonTai = danhSachTK.some(tk => tk.username === userMoi);
+
+        if (taiKhoanDaTonTai) {
+            alert("Tài khoản này đã tồn tại! Vui lòng chọn một tên đăng kí khác.");
+        } else {
+            // Thêm tài khoản mới vào mảng dữ liệu
+            danhSachTK.push({
+                username: userMoi,
+                password: passMoi
+            });
+
+            // Ghi đè cập nhật lại vào "file lưu" localStorage
+            localStorage.setItem("fileTaiKhoan", JSON.stringify(danhSachTK));
+
+            alert("Đăng kí tài khoản thành công! Hệ thống sẽ chuyển bạn về trang đăng nhập.");
+
+            // Tự động chuyển hướng về trang đăng nhập của bạn
+            window.location.href = "dangnhp.html";
+        }
+    });
+
+    // Bổ sung: Đang gõ ở ô nhập lại mật khẩu mà nhấn Enter cũng tự kích hoạt nút đăng ký
+    oMatKhauLan2.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            nutDangKi.click();
+        }
+    });
+</script>
+
+</html>

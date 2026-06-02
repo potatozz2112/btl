@@ -1,0 +1,82 @@
+body {
+  background: url(/img/anhnen.jpg);
+  /* 2. Không cho ảnh lặp lại thành nhiều ô nếu ảnh quá nhỏ */
+  background-repeat: no-repeat;
+  /* 3. Căn ảnh luôn nằm chính giữa màn hình */
+  background-position: center;
+  /* 4. Ép ảnh cố định tại chỗ khi bạn cuộn trang (tùy chọn) */
+  background-attachment: fixed;
+  /* 5. QUAN TRỌNG: Ép ảnh tự co giãn để phủ kín toàn bộ màn hình */
+  background-size: cover;
+  /* 6. Đảm bảo body luôn chiếm ít nhất 100% chiều cao màn hình */
+  min-height: 100vh;
+  margin: 0; /* Xóa lề mặc định để ảnh sát mép */
+}
+#dangnhap {
+  min-height: 100vh;
+  /*tác dụng ép chiều cao cảu khung = 100% chiều cao của màn hình hiển thị */
+  display: flex;
+  /* điều kiện để kích hoạt tác dụng của 2 dòng dưới */
+  justify-content: center;
+  /*căn giữa sản phẩm theo chiều ngang*/
+  align-items: center;
+  /*căn giữa sản phẩm theo chiều dọc */
+}
+form {
+  width: 380px;
+  height: 270px;
+  background-color: rgba(227, 222, 222, 0.7);
+  padding: 20px 20px 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 17px 2px beige;
+}
+#form-heading {
+  color: #ff6b6b;
+  text-align: center;
+}
+.form-gruop {
+  border-bottom: 1px solid #fff;
+  margin: 15px 0px 20px 0px;
+}
+.namelogin {
+  background: transparent;
+  /* loại bỏ màu nền */
+  border: 0;
+  outline: none;
+  /* loại bỏ đường viền ngoài */
+  color: black;
+  flex-grow: 1;
+}
+#dangnhap3 {
+  background: transparent;
+  text-align: center;
+  width: 100%;
+  height: 20px;
+  border: 1px solid #fff;
+}
+#dangnhap3:hover {
+  border: 1px solid red;
+  background-color: black;
+  color: red;
+}
+#qmk {
+  padding: 0px 0px 10px 0px;
+}
+#dkingoaile1 {
+  padding: 0px 40px 15px 0px;
+  text-align: center;
+  border: 1px solid bisque;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d14b4b;
+}
+#dkingoaile {
+  padding: 0px 40px 15px 0px;
+  text-align: center;
+  border: 1px solid bisque;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #8474d5;
+}

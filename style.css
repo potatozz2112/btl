@@ -1,0 +1,163 @@
+/* --- Reset CSS cơ bản --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* tự động giãn nở sao cho khi thêm phần tử hoặc co giãn nào px của nó vẫn giữ nguyên */
+  font-family: Arial, sans-serif;
+  /* ép tất cả các trang web phải sử dụng chữ arial nếu ko có thì dùng chữ sans-serif */
+}
+
+body {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* --- Menu Điều hướng (Navbar) --- */
+.navbar {
+  background-color: #d1b28a; /* Màu vàng nâu nhạt như trong ảnh */
+  padding: 10px 0;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  /*xóa dấu chấm vs dòng ul */
+  gap: 40px; /* Khoảng cách giữa các mục menu */
+}
+
+.nav-menu a {
+  text-decoration: none; /* Bỏ gạch chân theo ý bạn nhé */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.nav-menu a:hover {
+  color: #555;
+}
+
+/* --- Khung nội dung chính --- */
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+/* --- Lưới sản phẩm (Flexbox) --- */
+.product-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap; /* Tự động xuống dòng nếu màn hình nhỏ */
+}
+
+/* --- Thẻ sản phẩm từng ô --- */
+.product-card {
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  flex: 1;
+  min-width: 230px; /* Đảm bảo không bị quá bóp nhỏ */
+  position: relative; /* Để định vị tag giảm giá -29% */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tag giảm giá màu đỏ tròn */
+.badge-sale {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Khu vực chứa ảnh */
+.product-img {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+}
+
+.product-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Khu vực thông tin chữ bên dưới */
+.product-info {
+  border-top: 1px solid #eee;
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.product-name {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.product-name a {
+  text-decoration: none; /* Bỏ gạch chân tên sản phẩm */
+  color: #000;
+  font-weight: bold;
+}
+
+/* Giá cả */
+.product-price {
+  margin-bottom: 15px;
+}
+
+.old-price {
+  text-decoration: line-through; /* Gạch ngang giá cũ */
+  color: #999;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.current-price {
+  color: red;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* Nút thêm vào giỏ */
+.btn-add-cart {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-add-cart:hover {
+  background-color: #cc0000;
+}

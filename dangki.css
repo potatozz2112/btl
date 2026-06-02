@@ -1,0 +1,65 @@
+body {
+  background-image: url(/img/anhnen.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  margin: 0;
+}
+#dangkitaikhoan {
+  min-height: 100vh;
+  /*tác dụng ép chiều cao cảu khung = 100% chiều cao của màn hình hiển thị */
+  display: flex;
+  /* điều kiện để kích hoạt tác dụng của 2 dòng dưới */
+  justify-content: center;
+  /*căn giữa sản phẩm theo chiều ngang*/
+  align-items: center;
+  /*căn giữa sản phẩm theo chiều dọc */
+}
+form {
+  width: 450px;
+  height: 350px;
+  background-color: rgba(227, 222, 222, 0.7);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 1px rgb(235, 228, 228);
+}
+h1 {
+  color: #0b0b0b;
+  text-align: center;
+}
+.dki {
+  border-bottom: 1px solid rgb(247, 246, 244);
+  margin: 20px;
+  display: flex;
+}
+#taikhoan {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  flex-grow: 1;
+}
+#matkhau {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  flex-grow: 1;
+}
+#mklan2 {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  flex-grow: 1;
+}
+#dangkihoantat {
+  text-align: center;
+  padding: 5px 10px;
+  border: 1px solid beige;
+}
+#dangkihoantat:hover {
+  border: 1px solid rgb(200, 59, 59);
+  background-color: black;
+}
+#dacotaikhoan {
+  padding: 0 20px;
+}

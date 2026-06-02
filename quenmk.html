@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="qmk.css">
+    <title>bansach.com</title>
+</head>
+
+<body>
+    <div id="qmk">
+        <form action="" id qmk2>
+            <h1>Phục Hồi Mật Khẩu</h1>
+            <form action="">
+                <div id="qmk3">
+                    <input type="text" id="mk4" placeholder="Nhập email hoặc sdt khôi phục">
+                </div>
+                <p>Trang web này được bảo vệ bởi reCAPTCHA và <a href="https://policies.google.com/privacy"
+                        class="a1">Chính sách Bảo mật</a> cũng như <a href="https://policies.google.com/terms"
+                        class="a1">Điều
+                        khoản Dịch
+                        vụ </a>
+                    của Google
+                    được áp dụng.</p>
+                <a href="" id="gui">GỬI</a>
+                <a href="" id="huy">HỦY</a>
+                <div id="have1">
+                    <a href="/dangkitaikhoan.html"> ⇦ Đăng kí</a>
+                </div>
+                <div id="have2">
+                    <a href="/dangnhp.html"> ⇦ Đăng nhập</a>
+                </div>
+                <div id="ve">
+                    <a href="/trangchinh.html"> ⇦Về Trang Chủ</a>
+                </div>
+            </form>
+        </form>
+    </div>
+
+</body>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const nutGui = document.getElementById("gui");
+        const nutHuy = document.getElementById("huy");
+        const oNhap = document.getElementById("mk4");
+
+        // 1. Xử lý khi bấm nút HỦY (Chuyển quay lại trang đăng nhập)
+        if (nutHuy) {
+            nutHuy.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.location.href = "dangnhp.html";
+            });
+        }
+
+        // 2. Xử lý khi bấm nút GỬI
+        if (nutGui) {
+            nutGui.addEventListener("click", function (e) {
+                e.preventDefault(); // Chặn hành động tải lại trang mặc định của thẻ <a>
+
+                const thongTinNhap = oNhap.value.trim();
+
+                if (thongTinNhap === "") {
+                    alert("Vui lòng nhập tên tài khoản hoặc email để phục hồi!");
+                    return;
+                }
+
+                // Đọc "file" danh sách tài khoản đã đăng ký từ bộ nhớ LocalStorage
+                let danhSachTK = JSON.parse(localStorage.getItem("fileTaiKhoan")) || [];
+
+                // Tìm xem tài khoản vừa nhập có tồn tại trong hệ thống không
+                const taiKhoanCanTim = danhSachTK.find(tk => tk.username === thongTinNhap);
+
+                if (!taiKhoanCanTim) {
+                    alert("Tài khoản không tồn tại trên hệ thống! Vui lòng kiểm tra lại.");
+                    return;
+                }
+
+                // --- BƯỚC GIẢ LẬP GỬI MÃ VỀ GMAIL ---
+                // Tự động sinh ra một mã OTP ngẫu nhiên gồm 6 chữ số
+                const maRandom = Math.floor(100000 + Math.random() * 900000);
+
+                // Hiện thông báo giả lập gửi mã thành công (dùng để lấy mã test tính năng)
+                alert("Yêu cầu thành công!\n[Hệ thống giả lập] Một mã xác thực phục hồi đã được gửi đến Gmail của bạn.\nMã của bạn là: " + maRandom);
+
+                // 3. Hiển thị hộp thoại bắt người dùng nhập mã vừa nhận được
+                const maXacNhan = prompt("Mời bạn nhập mã xác thực gồm 6 chữ số đã gửi về Gmail:");
+
+                if (maXacNhan === null) return; // Nếu bấm nút Hủy trên hộp thoại thì dừng lại
+
+                // Kiểm tra mã người dùng nhập vào có khớp với mã hệ thống sinh ra không
+                if (maXacNhan === maRandom.toString()) {
+
+                    // 4. Nếu khớp mã, cho phép đặt lại mật khẩu mới luôn tại chỗ
+                    const matKhauMoi = prompt("Mã xác nhận chính xác! Mời nhập mật khẩu mới:");
+
+                    if (matKhauMoi && matKhauMoi.trim() !== "") {
+                        // Tiến hành cập nhật mật khẩu mới vào mảng dữ liệu
+                        taiKhoanCanTim.password = matKhauMoi.trim();
+
+                        // Lưu đè lại mảng dữ liệu mới vào LocalStorage để đồng bộ trang đăng nhập
+                        localStorage.setItem("fileTaiKhoan", JSON.stringify(danhSachTK));
+
+                        alert("Cập nhật mật khẩu mới thành công! Hệ thống sẽ chuyển bạn về trang đăng nhập.");
+                        window.location.href = "dangnhp.html";
+                    } else {
+                        alert("Mật khẩu mới không được để trống! Phục hồi thất bại.");
+                    }
+
+                } else {
+                    alert("Mã xác thực không chính xác! Quá trình phục hồi thất bại.");
+                }
+            });
+        }
+    });
+</script>
+
+</html>

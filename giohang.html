@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <style>
+        /* Thêm một chút CSS để giao diện gọn gàng, thẳng hàng */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .trong {
+            padding: 20px;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .thanhtoan {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>GIỎ HÀNG</h1>
+
+    <table id="cart-table">
+        <thead>
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên sách</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+
+        <tbody id="giohang-body">
+        </tbody>
+    </table>
+
+    <div id="trong" class="trong">
+        Giỏ hàng đang trống
+    </div>
+
+    <div id="thanhtoan-section" class="thanhtoan">
+        <h2>Tổng tiền: <span id="tongtien">0</span> đ</h2>
+        <button>THANH TOÁN</button>
+    </div>
+
+</body>
+
+<script>
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+
+    const body = document.getElementById("giohang-body");
+    const tongTien = document.getElementById("tongtien");
+    const trongDiv = document.getElementById("trong");
+    const cartTable = document.getElementById("cart-table");
+    const thanhToanSection = document.getElementById("thanhtoan-section");
+
+    // Tạo một hàm riêng để hiển thị giỏ hàng cho mượt
+    function hienThiGioHang() {
+        // LÚC ĐẦU: Kiểm tra xem giỏ hàng có rỗng không để ẩn/hiện hợp lý
+        if (gioHang.length === 0) {
+            trongDiv.style.display = "block";       // Hiện chữ trống
+            cartTable.style.display = "none";       // Ẩn bảng sách
+            thanhToanSection.style.display = "none"; // Ẩn phần tính tiền
+            return;
+        } else {
+            trongDiv.style.display = "none";        // Ẩn chữ trống đi vì đã có hàng
+            cartTable.style.display = "table";      // Hiện bảng sách
+            thanhToanSection.style.display = "block";// Hiện phần tính tiền
+        }
+
+        body.innerHTML = ""; // Xóa dữ liệu cũ trong bảng trước khi nạp lại
+        let tong = 0;
+
+        gioHang.forEach((sach, index) => {
+            let gia = parseInt(
+                sach.gia.replace(/\./g, "").replace(" đ", "")
+            );
+
+            tong += gia * sach.soLuong;
+
+            body.innerHTML += `
+            <tr>
+                <td>
+                    <img src="${sach.anh}" width="80">
+                </td>
+                <td>${sach.ten}</td>
+                <td>${sach.gia}</td>
+                <td>${sach.soLuong}</td>
+                <td>${(gia * sach.soLuong).toLocaleString()} đ</td>
+                <td>
+                    <button onclick="xoaSach(${index})">Xóa</button>
+                </td>
+            </tr>
+            `;
+        });
+
+        // Cập nhật lại tổng tiền vào thẻ span#tongtien
+        tongTien.textContent = tong.toLocaleString();
+    }
+
+    function xoaSach(index) {
+        gioHang.splice(index, 1);
+
+        localStorage.setItem(
+            "gioHang",
+            JSON.stringify(gioHang)
+        );
+
+        // Thay vì dùng location.reload() gây tải lại trang giật lag, 
+        // ta gọi lại hàm hienThiGioHang() để giao diện cập nhật ngay lập tức.
+        hienThiGioHang();
+    }
+
+    // Chạy hàm hiển thị ngay khi vừa mở trang
+    hienThiGioHang();
+</script>
+
+</html>
