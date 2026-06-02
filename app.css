@@ -1,5 +1,5 @@
 body {
-  background: url(/img/anhnen.jpg);
+  background: url(./img/anhnen.jpg);
   /* 2. Không cho ảnh lặp lại thành nhiều ô nếu ảnh quá nhỏ */
   background-repeat: no-repeat;
   /* 3. Căn ảnh luôn nằm chính giữa màn hình */
